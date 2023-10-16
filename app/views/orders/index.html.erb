@@ -1,0 +1,33 @@
+<div><b>Orders</b></div>
+<hr>
+
+<% @orders.each do |order| %>
+	<div class="row">
+		<div class="col-md-6">
+			ID: <span><%= order.id %></span><br/><br/> 
+			Created At: <span><%= order.created_at %></span><br/><br/> 
+			Promotion Codes: <span><%= order.promo_codes.pluck(:code).to_sentence %></span><br/><br/> 
+			Discount Codes: <span><%= order.discount_codes.pluck(:code).to_sentence %></span><br/><br/>
+			<br/><br/> 
+
+			Total Price: <span><%= order.price.to_f %>$</span>
+		</div>
+		</br>
+		<%= button_to 'Completed', order_path(order), { method: :patch, form: { data: { turbo: true } } } %>
+		</br>
+		</br>
+		<div class="col-md-6">
+			Items:
+			<ul>
+				<% order.items.each do |item| %>
+					<li><%= item.name %>(<%= item.size %>)
+						<% if item.instructions.present? %>
+							<li><%= item.instructions %></li>
+						<% end %>
+					</li><br/><br/>
+				<% end %>
+			</ul>
+		</div>
+	</div>
+	<hr>
+<% end %>

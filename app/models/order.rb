@@ -9,3 +9,4 @@ class Order < ApplicationRecord
 
 	enum status: [:in_progress, :completed]
 end
+
